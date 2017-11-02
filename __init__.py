@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, url_for, redirect, request, session
+from flask import Flask, render_template, flash, url_for, redirect, request, session, make_response
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from MySQLdb import escape_string as thwart
@@ -6,6 +6,7 @@ import gc
 from functools import wraps
 from content_management import Content
 from db_connect import connection
+from datetime import datetime, timedelta
 
 APP_CONTENT = Content()
 
@@ -55,6 +56,18 @@ def main():
 @login_required
 def dashboard():
     return render_template("dashboard.html", APP_CONTENT = APP_CONTENT)
+
+@login_required
+@app.route('/introduction-to-site/', methods=['GET'])
+def introapp():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        output = ['digit is good', 'python is cool.','<p><strong>Hello World</strong></p>', '43', 2]
+        
+        
+        return render_template("templating_demo.html", output = output)
+    except Exception as e:
+        return(str(e))
 
 
 @app.route("/about/")
@@ -143,6 +156,29 @@ def logout():
     session.clear()
     gc.collect()
     return redirect(url_for('main'))
+
+
+@app.route('/sitemap.xml/', methods=['GET'])
+def sitemap():
+    try:
+        pages = []
+        week = (datetime.now() - timedelta(days = 7)).date().isoformat()
+        for rule in app.url_map.iter_rules():
+            if "GET" in rule.methods and len(rule.arguments)==0:
+                pages.append(
+                    ["http://138.197.167.225/"+str(rule.rule),week]
+                )
+        sitemap_xml = render_template('sitemap_template.xml', pages = pages)
+        response = make_response(sitemap_xml)
+        response.headers["Content-Type"] = "application/xml"
+        return response
+    except Exception as e:
+        return(str(e))
+
+@app.route("/robots.txt/")
+def robots():
+    #return("User-agent: *\nDisallow /") #Disallows all robot traffic
+    return("User-agent: *\nDisallow: /register/\nDisallow: /login/") #Disallows robot traffic to sensitive urls
 
 
 @app.errorhandler(404)
