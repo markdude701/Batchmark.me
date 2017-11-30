@@ -1,3 +1,5 @@
+{% extends "header.html" %}
+{% block body %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,77 +31,41 @@
         
         
     </head>
+    <body>
+ 
+        <div class="container-fluid">
+            <div class="row"> <!--Bootstrap Row -->
 
-    <header>
-    <!-- Nav -->
-        <ul class="nav justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link active" href="/">
-                    <img style="max-width:120px; margin-top: -17px;" src="{{ url_for('static', filename='images/mainlogo.png') }}">
-                </a>
-            </li>
-            {% if session.logged_in %}
-            <li class="nav-item">
-                <a href="/dashboard/"> 
-                    <button type="button" class="btn btn-primary" aria-label="Left Align" style="margin-top: 5px; margin-bottom: 5px;"> Dashboard </button>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/logout/" ><img src="{{ url_for('static', filename='open-iconic/svg/account-logout.svg')}}" width="20em" >Logout</a>
-            </li>
-            
-            {% else %}
-            <li class="nav-item"> 
-                <a class="nav-link" href="/login/" ><img src="{{ url_for('static', filename='open-iconic/svg/account-login.svg')}}" width="20em" >Login</a>
-            </li>
-            {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="/about/"><img src="{{ url_for('static', filename='open-iconic/svg/eye.svg')}}" width="20em" >About</a>
-            </li>
-        </ul>
+                <div class="col col-md-6" style="text-align:left; margin-left:2em">
+                        <h1 class="display-3">Example Text</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis lectus ac sem commodo scelerisque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc a rutrum lectus, nec semper risus. Integer commodo nunc at odio sollicitudin, sed dignissim elit ullamcorper. In nulla quam, consectetur vel mi dictum, congue interdum nisi. Nullam dapibus augue ut placerat imperdiet. Mauris dui leo, placerat non luctus sed, consectetur sed augue. Integer dignissim tempor urna, ut convallis ligula tempus sed. Proin hendrerit arcu eu ante dignissim hendrerit.
+                    </p>
+                </div>
 
-        <!-- Login Model -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Login</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <form action="#" class="form-inline" method="post">
-                                <input type="text" class="form-control" placeholder="User Name" name="username" value="{{request.form.username}}">
-                                &nbsp;
-                                <input type="password" class="form-control" placeholder="Password" name="password" value="{{request.form.password}}">
-                                &nbsp; 
-                                <br>
-                                <input class="btn btn-primary" type="submit" value="Login">
-                            </form>
+                <div class="col col-md-4"><img src='/static/images/StockImg.jpg' alt="placeHolder" height=70% ></div>
+                <!-- style="display: block; position: relative; left: -5%; margin-left:2em; -->
 
-                            <div class="container">
-                                <br>
-                                    <p>No account? <a href="/register/">Register here</a>.</p
-                            </div>
-                        </div>
-                    </div>
+            </div>
+
+            <div class="row"> <!-- bootstrap row -->
+                <div class="col col-md"><img src='/static/images/StockImg.jpg' height=70% alt="placeHolder"></div>
+                    <div class="cold col-md-5" style="text-align:right; margin-right:2em">
+                        <h1 class="display-4">Example Text</h1>
+                        <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis lectus ac sem commodo scelerisque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc a rutrum lectus, nec semper risus. Integer commodo nunc at odio sollicitudin, sed dignissim elit ullamcorper. In nulla quam, consectetur vel mi dictum, congue interdum nisi. Nullam dapibus augue ut placerat imperdiet. Mauris dui leo, placerat non luctus sed, consectetur sed augue. Integer dignissim tempor urna, ut convallis ligula tempus sed. Proin hendrerit arcu eu ante dignissim hendrerit.
+                    </p>
                 </div>
             </div>
-        </div><!-- END Login Model -->
-    </header>
-    <body>
-        <div class="container" style="text-align:center">
-            <h1>This is where the words would be</h1>
-            <a href ="/dashboard/">
-                <video autoplay="autoplay" poster="/static/images/#" style="width:80%; max-height: 80%; texr-align: center" muted="muted">
-                 <source src="/static/videos/rick.mp4" type="video/mp4">
-                </video>
-            </a>
-            <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+
+
         </div>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        
     </body>
 </html>
+{% endblock %}

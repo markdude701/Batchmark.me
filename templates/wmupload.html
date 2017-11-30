@@ -1,0 +1,121 @@
+{% extends "header.html" %}
+
+{% block body %}
+<!-- Code Pulled from https://bootsnipp.com/snippets/3X6kB -->
+
+    
+    <head>
+        <script type="text/javascript">
+                $('#imageUpload').change(function(){			
+                readImgUrlAndPreview(this);
+                function readImgUrlAndPreview(input){
+                     if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {			            	
+                                $('#imagePreview').attr('src', e.target.result);
+                                }
+                          };
+                          reader.readAsDataURL(input.files[0]);
+                     }	
+            });
+            
+            
+            
+      function fileSelected() {
+        var file = document.getElementById('fileToUpload').files[0];
+        if (file) {
+          var fileSize = 0;
+          if (file.size > 1024 * 1024)
+            fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+          else
+            fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+
+          document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+          document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+          document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+        }
+      }
+        </script>
+
+
+    </head>
+    <body>
+
+
+
+
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <form enctype="multipart/form-data" class="form-inline" id="watermark_upload" method="post">
+            <div class="row" id="step-1">
+                <div class="col-xs-12">
+                    <div class="col-md-12 well text-center">
+                        <h1 class="display-3">Watermark Upload: Step 1/4</h1>
+                      <label for="fileToUpload">Select a Watermark File to Upload</label>
+                                <br />
+                      <input type="file" name="wmfile" id="fileToUpload" onchange="fileSelected();"/>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div id="fileName">&nbsp;</div>
+                        <br />
+                    </div>
+                    <div class="row justify-content-center">
+                        <div id="fileSize"> &nbsp;</div>
+                        <br />
+                    </div>
+                    <div class="row justify-content-center">
+                        <div id="fileType">&nbsp;</div>
+                    </div>
+            <br />
+            <div class="row justify-content-center" style="margin-bottom:2em">
+                <input class="btn btn-default" type="submit" value="Upload" method="POST">
+            </div>
+
+                </div>
+                </div>
+          </form>
+            </div>
+    </div>
+    </div>
+<!--
+    <form enctype="multipart/form-data" class="form-inline" id="photo_upload" method="post">
+                <input type="file" class="form-control" name="file">
+            </form>
+
+
+    <form method="post" enctype="multipart/form-data">
+    <div class="container"> <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Upload Watermark Files</strong> <small> </small></div>
+                    <div class="panel-body">
+                        <input type="file" name="imageUpload" id="imageUpload" class="hide"/> 
+                        <label for="imageUpload" class="btn btn-large">Select file</label><br/><br/><br/>
+                        <img src="" id="imagePreview" alt="Preview Image" width="200px"/>
+                        
+                            <form enctype="multipart/form-data" class="form-inline" method="post">
+                                <input type="file" class="form-control" name="wmfile" id="imageUpload" onchange="imageUpload">
+                                  &nbsp;
+                                <br />
+                                <input class="btn btn-default" type="submit" value="Upload" for="imageUpload" >
+
+                              </form>
+                           
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    </form>
+    
+-->
+</body>
+{% endblock %}

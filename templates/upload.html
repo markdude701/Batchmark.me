@@ -1,0 +1,148 @@
+{% extends "header.html" %}
+
+{% block body %}
+
+<h1>UPLOAD PAGE.HTML</h1>
+
+<script>
+    function fileSelected() {
+            var file[0] = document.getElementById('fileToUpload').files[0];
+            var numFiles = document.getElementByID('fileTopUpload').isElement()
+            if (file[]) {
+              var fileSize = 0;
+              if (file[].size > 1024 * 1024)
+                fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+              else
+                fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+
+              document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+              document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+              document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+            }
+          }
+
+</script>
+<!-- Preview Script -->
+<script>
+ $('#add_more').click(function() {
+          "use strict";
+          $(this).before($("<div/>", {
+            id: 'filediv'
+          }).fadeIn('slow').append(
+            $("<input/>", {
+              name: 'file[]',
+              type: 'file',
+              id: 'file',
+              multiple: 'multiple',
+              accept: 'image/*'
+            })
+          ));
+        });
+
+$('#upload').click(function(e) {
+          "use strict";
+          e.preventDefault();
+
+          if (window.filesToUpload.length === 0 || typeof window.filesToUpload === "undefined") {
+            alert("No files are selected.");
+            return false;
+          }
+
+          // Now, upload the files below...
+          // https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications#Handling_the_upload_process_for_a_file.2C_asynchronously
+        });
+
+        deletePreview = function (ele, i) {
+          "use strict";
+          try {
+            $(ele).parent().remove();
+            window.filesToUpload.splice(i, 1);
+          } catch (e) {
+            console.log(e.message);
+          }
+        }
+
+    $("#file").on('change', function() {
+          "use strict";
+
+          // create an empty array for the files to reside.
+          window.filesToUpload = [];
+
+          if (this.files.length >= 1) {
+            $("[id^=previewImg]").remove();
+            $.each(this.files, function(i, img) {
+              var reader = new FileReader(),
+                newElement = $("<div id='previewImg" + i + "' class='previewBox'><img /></div>"),
+                deleteBtn = $("<span class='delete' onClick='deletePreview(this, " + i + ")'>X</span>").prependTo(newElement),
+                preview = newElement.find("img");
+
+              reader.onloadend = function() {
+                preview.attr("src", reader.result);
+                preview.attr("alt", img.name);
+              };
+
+              try {
+                window.filesToUpload.push(document.getElementById("file").files[i]);
+              } catch (e) {
+                console.log(e.message);
+              }
+
+              if (img) {
+                reader.readAsDataURL(img);
+              } else {
+                preview.src = "";
+              }
+
+              newElement.appendTo("#filediv");
+            });
+          }
+        });
+        
+function preview_images(){
+ var total_file=document.getElementById("images").files.length;
+ for(var i=0;i<total_file;i++)
+ {
+  $('#image_preview').append("<div class='col-md-3'><img height='100em' class='img-responsive' src='"+URL.createObjectURL(event.target.files[i])+"'></div>");
+ }
+}
+</script>
+
+
+<div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <form enctype="multipart/form-data" class="form-inline" id="watermark_upload" method="post" multiple>
+            <div class="row" id="step-1">
+                <div class="col-xs-12">
+                    <div class="col-md-12 well text-center">
+                        <h1 class="display-3">Photo Upload: Step 3/4</h1>
+                      <label>Select a Photo File to Upload</label>
+                                <br />
+                      <input type="file" id="images" name="images[]" onchange="preview_images();" multiple >
+                    </div>
+                    <div class="row justify-content-center">
+                        <div id="fileName">&nbsp;</div>
+                        <br />
+                    </div>
+                    <div class="row justify-content-center">
+                        <div id="fileSize"> &nbsp;</div>
+                        <br />
+                    </div>
+                    <div class="row justify-content-center">
+                        <div id="fileType">&nbsp;</div>
+                    </div>
+            <br />
+            <div class="row justify-content-center" style="margin-bottom:2em">
+                <input class="btn btn-default" type="submit" value="Upload" method="POST">
+            </div>
+                    <div class="row" id="image_preview" style="height:20%"><br /></div>
+                    <p>{{waterMark}}</p> <!-- Append file name to a generic directory as a directory for PIL -->
+                </div>
+                </div>
+          </form>
+            </div>
+    </div>
+    </div>
+
+        
+{% endblock %}

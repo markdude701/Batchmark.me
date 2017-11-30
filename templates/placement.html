@@ -1,0 +1,46 @@
+{% extends "header.html" %}
+
+{% block body %}
+
+  <div class="container">
+    <br>
+      <h1 class="display-1">Watermark Placement: Step 3/4</h1>
+      <div class="well-lg"> <!--Well doesnt seem to work-->
+        <p>Select an option:</p>
+        <div class="row">
+
+            <div class="col-md">
+                <label class="radio-inline"><input type="radio" name="optradio" id="topRight" for="topRight">Top Right</label>
+                <img src="/static/images/terry.jpg" style="height:200px; width:200px; margin-top:10px" alt="topRightCorner" >
+                <br />
+            </div>
+            <div class="col-md">
+                <label class="radio-inline"><input type="radio" name="optradio" id="topLeft" for="topLeft">Top Left</label>
+                <img src="/static/images/terry.jpg" style="height:200px; width:200px; margin-top:10px" alt="topLeftCorner" >
+                <br />
+            </div>   
+            <div class="col-md">
+                <label class="radio-inline"><input type="radio" name="optradio" id="bottomRight" for="bottomRight">Bottom Right</label>
+                <img src="/static/images/terry.jpg" style="height:200px; width:200px; margin-top:10px" alt="bottomRightCorner" >
+                <br />
+            </div> 
+            <div class="col-md">
+                <label class="radio-inline"><input type="radio" name="optradio" id="bottomLeft" for="bottomLeft">Bottom Left</label>
+                <img src="/static/images/terry.jpg" style="height:200px; width:200px; margin-top:10px" alt="bottomLeftCorner" >
+                <br />
+            </div> 
+            <div class="col-md">
+                <p>Press Submit to Process</p>
+                <form enctype="multipart/form-data" class="form-inline" method="post">
+
+                    <input class="btn btn-default" type="submit" value="Submit">
+
+                </form>
+                <br />
+            </div> 
+        </div>
+    </div>
+
+  </div>
+
+{% endblock %}

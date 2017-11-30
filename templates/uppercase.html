@@ -1,0 +1,22 @@
+{% extends "header.html" %}
+
+{% block body %}
+
+  <div class="container">
+    <br>
+      <h4>Uppercase it!</h4>
+      <br>
+      <form action="#" class="form-inline" method="post">
+
+        <input type="text" class="form-control" placeholder="Uppercase it!" name="upper" value="{{request.form.upper}}">
+          &nbsp;
+        <input class="btn btn-primary" type="submit" value="Uppercase it!">
+
+      </form>
+
+      <br>
+      <p>{{uppered}}</p>
+
+  </div>
+
+{% endblock %}
