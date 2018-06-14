@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>DIGIT 400</title>
+        <title>Batchmark.me</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
@@ -38,126 +38,81 @@
 
     <header>
     <!-- Nav -->
+        <div style="background-color:aliceblue">
         <ul class="nav justify-content-end">
             <li class="nav-item">
                 <a class="nav-link active" href="/">
-                    <img style="max-width:120px; margin-top: -17px; text-align:left " src="{{ url_for('static', filename='images/mainlogo.png') }}">
+                    <img style="max-width:120px; text-align:left " src="{{ url_for('static', filename='images/logo.png') }}">
                     
                 </a>
             </li>
-            
-            
-            {% if session.logged_in %}
-            <li class="nav-item">
-                <a href="/dashboard/">
-                    <button type="button" class="btn btn-primary" aria-label="Left Align" style="margin-top: 5px; margin-bottom: 5px;"> Dashboard </button>
-                </a>
-            </li>
-            
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/logout/" ><img src="{{ url_for('static', filename='open-iconic/svg/account-logout.svg')}}" width="20em" > Logout</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="/login/" ><img src="{{ url_for('static', filename='open-iconic/svg/account-login.svg')}}" width="20em" > Login</a>
-            </li>
-            {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="/about/"><img src="{{ url_for('static', filename='open-iconic/svg/eye.svg')}}" width="20em" >About</a>
-            </li>
         </ul>
+        </div>
 
         
         
         
         <!-- Login Model -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Login</h4>
-                    </div>
-                    
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <form action="" class="form-inline" method="POST">
-                                
-                                <input style="margin-right: 2%;" type="text" class="form-control" placeholder="Username" name="username" value="{{request.form.username}}">
-                                
-                                <input type="password" class="form-control" placeholder="Password" name="password" value="{{request.form.password}}">
-                                
-                                <input style="margin-top: 2%;" class="btn btn-primary" type="submit" value="Login">
-                                
-                            </form>
-
-                            <div class="container">
-                                <p>No account? <a href="/register/">Register here</a>.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- END Login Model -->
+        
     </header>
     <body>
-        <div class="container-fluid">
-            <div class = "row">
-                <div class="jumbotron" style="margin-left:2em; margin-right:2em">
-                    <div class="container-fluid ">
-                      <div class="col-md"><h1 class="display-1" >Batchmark.me</h1>
-                        <h4>A Website by Mark Makowski</h4>
+        <div style="background-color:aliceblue">
+            <div class="container-fluid">
+                <div class = "row">
+                    <div class="jumbotron" style="margin-left:2em; margin-right:2em">
+                        <div class="container-fluid ">
+                          <div class="col-md"><h1 class="display-1" >Batchmark.me</h1>
+                            <h4>A Website by Mark Makowski</h4>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        
-            <div class="col-md">
-                <nav class="navbar navbar-expand-sm navbar-fixed-top sticky-top" style="width:500px">
-                  <a class="navbar-brand" href="#">
-                    <a href="/">
-                        <img src="{{ url_for('static', filename='open-iconic/svg/camera-slr.svg')}}" width="20em" alt="CameraLogo" >
-                      </a>
-                    </a>
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a href="/watermark/" >
-                          <button type="button" class="btn btn-primary btn-lg" style='margin:1em'>Upload</button>
+
+                <div class="col-md">
+                    <nav class="navbar navbar-expand-sm navbar-fixed-top sticky-top" style="width:500px">
+                      <a class="navbar-brand" href="#">
+                        <a href="/">
+                            <img src="{{ url_for('static', filename='open-iconic/svg/camera-slr.svg')}}" width="50em" alt="CameraLogo" >
+                          </a>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="/about/">
-                          <button type="button" class="btn btn-primary btn-lg" style='margin:1em'>FAQ</button>
-                        </a>
-                    </li>
-                  </ul>
-                </nav>
+                      <ul class="navbar-nav">
+                        <li class="nav-item">
+                          <a href="/watermark/" >
+                              <button type="button" class="btn btn-primary btn-lg btn-block btn-huge" style='margin:5em'>Upload</button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="/about/">
+                              <button type="button" class="btn btn-primary btn-lg btn-block btn-huge" style='margin:5em; margin-left:10em'>FAQ</button>
+                            </a>
+                        </li>
+                      </ul>
+                    </nav>
+                </div>
+            </div>
+            </div>
+            <hr />
+            <div class="container-fluid" style=" min-height:100%">
+
+                {% with messages = get_flashed_messages() %}
+
+                    {% if messages %}
+
+                        {% for message in messages %}
+                            <div class="alert alert-warning" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="True">&times;</span></button>
+                                {{message}}
+                            </div>
+                        {% endfor %}
+
+                    {% endif %}
+
+                {% endwith %}
+                {% block body %}
+                    <!-- Content -->
+                {% endblock %}
             </div>
         </div>
-        </div>
-        <hr />
-        <div class="container-fluid" style=" min-height:100%">
-            
-            {% with messages = get_flashed_messages() %}
-            
-                {% if messages %}
-                
-                    {% for message in messages %}
-                        <div class="alert alert-warning" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="True">&times;</span></button>
-                            {{message}}
-                        </div>
-                    {% endfor %}
-            
-                {% endif %}
-            
-            {% endwith %}
-            {% block body %}
-        
-            {% endblock %}
-        </div>
-        
         
         
         

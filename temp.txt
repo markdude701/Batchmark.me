@@ -1,0 +1,159 @@
+if optradio == "1":
+            #flash("Opt Radio 1")
+            #Place a Image in the bottom right hand corner of the page - Where most photographers would put their watermark of a 1920x1080
+            smSz = (250,100) #New Size of watermark
+            leftTopPlc = (100,100,350,200) #Location on Image
+            smImg = waterMark.resize(smSz) #Resize Watermark to fit image
+            newFile = im.paste(smImg, leftTopPlc)#(Start X,Start Y,End X, End Y)
+            resizedIm = firstResize(im)
+            resizedWm = firstResize(wm)
+            finished = process(resizedIm,resizedWm)
+
+            return send_file('/var/www/FlaskApp/FlaskApp/uploads/'+finished, attachment_filename='new_watermark')
+
+
+        elif optradio == "2":
+
+            smSz = (250,100)
+            rightTopPlc = (1600,100,1850,200)
+            smImg = waterMark.resize(smSz)
+            im.paste(smImg, rightTopPlc)#(Start X,Start Y,End X, End Y)
+            if file and allowed_file(file.newFile):
+                uploaded_photo = secure_filename(file.newFile) #Creates the path of the Watermark and sets it to WM
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], finishedWaterMark)) #Save File
+                return send_file('/var/www/FlaskApp/FlaskApp/uploads/'+finishedWaterMark, attachment_filename='new_watermark')
+
+        elif optradio == "3": #Bottom Left
+            smSz = (250,100)
+            rightTopPlc = (100,900,350,1000)
+            smImg = waterMark.resize(smSz)
+            im.paste(smImg, rightTopPlc)#(Start X,Start Y,End X, End Y)
+            if file and allowed_file(file.newFile):
+                uploaded_photo = secure_filename(file.newFile) #Creates the path of the Watermark and sets it to WM
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], finishedWaterMark)) #Save File
+                return send_file('/var/www/FlaskApp/FlaskApp/uploads/'+finishedWaterMark, attachment_filename='new_watermark')
+
+        elif optradio == "4": #Bottom Right
+            #Place a Image in the bottom right hand corner of the page - Where most photographers would put their watermark of a 1920x1080
+            smSz = (250,100) #Create Size based Different in size in the paste statement
+            # 1850-1600, 1000-900
+            leftPlace = (1600,900,1850,1000)#(Start X,Start Y,End X, End Y)
+            smImg = waterMark.resize(smSz)
+            im.paste(smImg, leftPlace)#(Start X,Start Y,End X, End Y)
+            if file and allowed_file(file.newFile):
+                uploaded_photo = secure_filename(file.newFile) #Creates the path of the Watermark and sets it to WM
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], finishedWaterMark)) #Save File
+                return send_file('/var/www/FlaskApp/FlaskApp/uploads/'+finishedWaterMark, attachment_filename='new_watermark')
+        else:
+            #This shouldn't happen when it is used within the website
+            flash("Incorrect Input")
+            return render_template('photo_process.html')
+            #DIR = '/tmp' DIR FOR PHOT UPLOADS
+            #print len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]) #LISTS THE NUMBER OF FILES IN DIR
+
+            #Multiple Uploads
+           #pathlist = Path(directory_in_str).glob('**/*.asm')
+            #for path in pathlist:
+            # because path is object not string
+            #path_in_str = str(path)
+            # print(path_in_str)
+            #https://stackoverflow.com/questions/10377998/how-can-i-iterate-over-files-in-a-given-directory
+
+        #Client will save this and then create a file with the filename of screencap.png
+        flash("Processing...")
+        
+        
+        
+        
+        
+        Nav with JINJA
+        
+        {% if session.logged_in %}
+            <li class="nav-item">
+                <a href="/dashboard/">
+                    <button type="button" class="btn btn-primary" aria-label="Left Align" style="margin-top: 5px; margin-bottom: 5px;"> Dashboard </button>
+                </a>
+            </li>
+            
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/logout/" ><img src="{{ url_for('static', filename='open-iconic/svg/account-logout.svg')}}" width="20em" > Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/login/" ><img src="{{ url_for('static', filename='open-iconic/svg/account-login.svg')}}" width="20em" > Login</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="/about/"><img src="{{ url_for('static', filename='open-iconic/svg/eye.svg')}}" width="20em" >About</a>
+            </li>
+          {{% endif %}}
+            
+            
+            
+            
+            
+            if userInput == "1":
+        return send_file(photo_local + "Watermark.JPG", attachment_filename='WaterMarked.jpg')
+
+    elif userInput == "2":
+
+        smSz = (250,100)
+        rightTopPlc = (1600,100,1850,200)
+        smImg = waterMarkOpen.resize(smSz, Image.BILINEAR)
+        imOpen.paste(smImg, rightTopPlc)#(Start X,Start Y,End X, End Y)
+        #im.show()    
+        savePrompt(imOpen)
+
+    elif userInput == "3": #Bottom Left
+        smSz = (250,100)
+        rightTopPlc = (100,900,350,1000)
+        smImg = waterMarkOpen.resize(smSz, Image.BILINEAR)
+        imOpen.paste(smImg, rightTopPlc)#(Start X,Start Y,End X, End Y)
+        #im.show()  
+        savePrompt(imOpen)
+
+    elif userInput == "4": #Bottom Right
+        #Place a Image in the bottom right hand corner of the page - Where most photographers would put their watermark of a 1920x1080
+        smSz = (250,100) #Create Size based Different in size in the paste statement 
+        # 1850-1600, 1000-900
+        leftPlace = (1600,900,1850,1000)#(Start X,Start Y,End X, End Y)
+        smImg = waterMarkOpen.resize(smSz, Image.BILINEAR)
+        imOpen.paste(smImg, leftPlace)#(Start X,Start Y,End X, End Y)
+        #im.show()    
+        savePrompt(imOpen)
+
+    else:
+        #This shouldn't happen when it is used within the website
+        print("Incorrect Input")
+        
+        
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Login</h4>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <form action="" class="form-inline" method="POST">
+                                
+                                <input style="margin-right: 2%;" type="text" class="form-control" placeholder="Username" name="username" value="{{request.form.username}}">
+                                
+                                <input type="password" class="form-control" placeholder="Password" name="password" value="{{request.form.password}}">
+                                
+                                <input style="margin-top: 2%;" class="btn btn-primary" type="submit" value="Login">
+                                
+                            </form>
+
+                            <div class="container">
+                                <p>No account? <a href="/register/">Register here</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- END Login Model -->

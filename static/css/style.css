@@ -6,29 +6,6 @@
     
 }
 
-/*Upload CSS */
-/* layout.css Style */
-.upload-drop-zone {
-  height: 200px;
-  border-width: 2px;
-  margin-bottom: 20px;
-}
-
-/* skin.css Style*/
-.upload-drop-zone {
-  color: #ccc;
-  border-style: dashed;
-  border-color: #ccc;
-  line-height: 200px;
-  text-align: center
-}
-.upload-drop-zone.drop {
-  color: #222;
-  border-color: #222;
-}
-
-
-
 .file-preview-input {
     position: relative;
     overflow: hidden;
@@ -51,12 +28,14 @@
 .file-preview-input-title {
     margin-left:2px;
 }
-/*END Upload CSS */
 
-h1 {
-    
-    font-family: 'Bungee Shade', cursive;
-    font-family: 'Sansita', sans-serif;
-    font-family: 'Ramabhadra', sans-serif;
-    
-}
+
+
+/* CSS For rest of website END Upload CSS */
+/*Personal CSS */
+
+
+
+
+
+

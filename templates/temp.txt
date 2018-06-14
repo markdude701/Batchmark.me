@@ -1,0 +1,165 @@
+{% extends "personal_header.html" %}
+
+{% block body %}
+
+<h1 class="title">Resume</h1>
+
+
+    <div class="container">
+        <div class="card-columns">
+        <div class="row justify-content-center">
+            <div> 
+                 <nav id="navbar-example2" class="navbar navbar-light bg-light">
+                  <a class="navbar-brand" href="#">Navbar</a>
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#info">Information</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#edu">Education</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#jobs">Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#skills">Achievements</a>
+                    </li>
+                  </ul>
+                </nav>
+                <div class="card text-white bg-dark mb-3">
+                <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+                  <h1 id="info">Information</h1>
+                    <address>
+                        Mark Makowski <br>
+                        724-882-4690	<br>			        	         						          
+                        7145 Guyer Road<br>
+                        New Kensington, PA 15068<br>
+                        <a href="mailto:mark.a.makowski@gmail.com">mark.a.makowski@gmail.com</a><br>
+                    </address>
+                    			 					         
+                    <div id="ResumeFormat" style="border-left: 1px solid #999">
+                  <h1 id=edu>Education</h1>
+                    <h5>Digital Humanities</h5>
+                    <h5>Penn State Behrend, Erie PA</h5>
+                    <h5>Expected Graduation: Fall 2018</h5>
+                    <h5>(2016-Current)</h5>
+                    <br>
+                    
+                    <h5>International Business and Project and Supply Chain Management</h5>
+                    <h5>Penn State Behrend, Erie PA</h5>
+                    <h5>(2015-2016)</h5>
+                    <br>
+                    
+                    <h5>Computer Engineering </h5>
+                    <h5>Penn State Behrend, Erie PA</h5>
+                    <h5>(2014-2015</h5>
+                    <br>
+                    
+                    
+                    
+                    
+                  <h1 id="jobs">Jobs</h1>
+                    <h5>Work - Geek Squad - Erie,PA - Current</h5>
+                    <p>Built and comprehensively trained in the skills to comprehend and market technical plans to achieve a daily quota. Trained to effectively use time, demonstrate value rather than cost, and connect with the public as an effective sales strategy. Trained in multiple portions of the Best Buy Store, and excels in quick and quality service.</p>
+                    
+                    <h5>Research  Penn State Behrend - Erie, PA - Summer 2017</h5>
+                    <p>Digitized documents collected in the Behrend Archive, of Penn State, with the assistance of Dr. Aaron Mauro. Taught many methods of text encoding, in both XML and HTML, in order to preserve important, historical information.</p>
+                    <br>
+                    <h5>Internship - HAPPI 92.7 Erie - Erie, PA - Spring 2017</h5>
+                    <p>Was mentored by Mr. Ryan Mahloney (Public Relations), studying how a radio station operates. Learned speaking methods to improve public speaking, and confidence while being in high pressure situations.</p>
+                    <br>
+                    <h5>Job Shadow - Metis Secure Solution - Oakmont, PA - Spring 2014</h5>
+                    <p>Shadowed Mr. David Hochendoner (Chief Technical Officer), noting his normal work cycle. Spoke with the Metis’ software and hardware engineers and was given knowledge on how their company succeeds.</p>
+                    
+                    <br>
+                    
+                    <h5>Work - Makowski Insurance - Lower Burrell, PA - </h5>
+                    <p>Created personalized client-specific Windows and Linux-based computers for a local business to increase efficiency and
+productivity of the employees, hence making the company more commercially effective. Established a file network for sharing large accounts and documents.</p>
+                    
+                    <br>
+                  <h1 id="skills">Notable Achievements</h1>
+                    <h5>Eagle Scout - Laurel Highlands BSA District -Pittsburgh, PA - June 2014</h5>
+                    <p>Achieved the rank of Eagle Scout, after completed over nine hundred total hours of work on the Eagle Scout project. Learned leadership and organization skills through teaching others to be efficient in order to complete the project. Developed financial savoir faire through working with my home town in order to purchase materials to complete the project.</p>
+                    <br>
+                    <h5>Triangle Fraternity - Penn State Behrend - Erie, PA  Spring 2015 - Present</h5>
+                    <p>Scribe Chair of an engineering and science organization that values the development of each member
+and develop the highest standards of personal integrity and character. Aimed to foster and provide an intellectual, mature environment for each member through individual and group effort
+through the mutual companionship of men with similar professional interest and goals.</p>
+                    <br>
+
+                </div>
+                </div>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+               
+                
+                
+                
+            </div>
+            <div> 
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="/static/images/MeResized.jpg" alt="ME-Card_image">
+                  <div class="card-body">
+                    <h5 class="card-title">About Me!</h5>
+                    <p class="card-text">
+                        <address>
+                        Mark Makowski <br>
+                        724-882-4690	<br>			        	         						          
+                        7145 Guyer Road<br>
+                        New Kensington, PA 15068<br>
+                        <a href="mailto:mark.a.makowski@gmail.com">mark.a.makowski@gmail.com</a><br>
+                    </address>
+                    <a href="/contact/" class="btn btn-primary">Contact</a>
+                  </div>
+                </div>
+                
+
+            </div>
+
+        </div>
+        
+        <div class="row justify-content-center">
+            <div>
+                
+            </div>
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <img src="#" alt="resumeSample" sytle="width: 18rem;"/>
+                        
+                        
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            
+        </div>
+        
+        
+        <br />
+        <a href="javascript:history.go(-1)">
+            <button type="button" class="btn btn-info">GO BACK</button>
+
+        </a>
+        
+      </div>  
+    </div>
+        
+    <br />
+
+    
+    <br />
+
+
+
+
+{% endblock %}

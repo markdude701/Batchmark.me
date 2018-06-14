@@ -5,42 +5,56 @@
   <div class="container">
     <br>
       <h1 class="display-1">Watermark Placement: Step 3/4</h1>
-      <div class="well-lg"> <!--Well doesnt seem to work-->
+      <div class='row justify-content-center'>
+        <p><b>Photo:</b> {{uploaded_photo}}   </p>
+        <p><b>Watermark:</b> {{waterMark}}</p>
+      </div>
+      
+      <div class="well-lg"> <!--Well doesnt seem to work [there are no wells in Bootstrap 4! -AM]-->
+
         <p>Select an option:</p>
         <div class="row">
+            <form action="{{ url_for('photo_process') }}" class="form-inline" enctype="text/plain" id="placement" method="post">
+                <div class="col-md">
+                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="topRight" id="1" value="1">Top Right</label>
+                    <img src="/static/images/topRight.jpg" style="height:200px; width:200px; margin-top:10px" alt="topRightCorner" >
+                    <br />
+                </div>
+                <div class="col-md">
+                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="topLeft" id="2" value="2">Top Left</label>
+                    <img src="/static/images/topLeft.jpg" style="height:200px; width:200px; margin-top:10px" alt="topLeftCorner" >
+                    <br />
+                </div>
+                <div class="col-md">
+                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="bottomRight" id="3" value="3">Bottom Right</label>
+                    <img src="/static/images/chiswm.jpg" style="height:200px; width:200px; margin-top:10px" alt="bottomRightCorner" >
+                    <br />
+                </div>
+                <div class="col-md">
+                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="bottomLeft" id="4" value="4">Bottom Left</label>
+                    <img src="/static/images/bottomLeft.jpg" style="height:200px; width:200px; margin-top:10px" alt="bottomLeftCorner" >
+                    <br />
+                </div>
+                
+                {% if uploaded_photo and waterMark %}
+                    <div class="col-md">
+                        <p>Press Submit to Process</p>
+                        <input class="btn btn-default" name="submit_button" type="submit" value="Submit">
+                        <br />
+                    </div>
+                {% else %}
+                    <div class="col-md">
+                        <p>Process Error with the Uploads</p>
+                        <br />
+                        <p>Try Again!</p>
+                    </div>
 
-            <div class="col-md">
-                <label class="radio-inline"><input type="radio" name="optradio" id="topRight" for="topRight">Top Right</label>
-                <img src="/static/images/terry.jpg" style="height:200px; width:200px; margin-top:10px" alt="topRightCorner" >
-                <br />
-            </div>
-            <div class="col-md">
-                <label class="radio-inline"><input type="radio" name="optradio" id="topLeft" for="topLeft">Top Left</label>
-                <img src="/static/images/terry.jpg" style="height:200px; width:200px; margin-top:10px" alt="topLeftCorner" >
-                <br />
-            </div>   
-            <div class="col-md">
-                <label class="radio-inline"><input type="radio" name="optradio" id="bottomRight" for="bottomRight">Bottom Right</label>
-                <img src="/static/images/terry.jpg" style="height:200px; width:200px; margin-top:10px" alt="bottomRightCorner" >
-                <br />
-            </div> 
-            <div class="col-md">
-                <label class="radio-inline"><input type="radio" name="optradio" id="bottomLeft" for="bottomLeft">Bottom Left</label>
-                <img src="/static/images/terry.jpg" style="height:200px; width:200px; margin-top:10px" alt="bottomLeftCorner" >
-                <br />
-            </div> 
-            <div class="col-md">
-                <p>Press Submit to Process</p>
-                <form enctype="multipart/form-data" class="form-inline" method="post">
 
-                    <input class="btn btn-default" type="submit" value="Submit">
-
-                </form>
-                <br />
-            </div> 
+                {% endif %}
+            </form>
         </div>
     </div>
-
+      
   </div>
 
 {% endblock %}

@@ -5,18 +5,31 @@ from datetime import datetime, timedelta
 from passlib.hash import sha256_crypt
 from MySQLdb import escape_string as thwart
 import gc
-import os
+import os, os.path
 from werkzeug.utils import secure_filename
 from functools import wraps
 from content_management import Content
 from db_connect import connection
 from library import library
+from images import savePrompt, firstResize, processTopLeft, processTopRight, processBottomLeft, processBottomRight
+from pathlib import Path
+import glob
+import PIL
+from PIL import Image
 
 APP_CONTENT = Content()
+
+#global uploaded_photo
+#global waterMark
+#global optradio
 
 UPLOAD_FOLDER = '/var/www/FlaskApp/FlaskApp/uploads'
 WATERMARK_FOLDER = '/var/www/FlaskApp/FlaskApp/uploads/wm'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+waterMark = ''
+uploaded_photo = ''
+optradio = ''
 
 app = Flask(__name__, instance_path='/var/www/FlaskApp/FlaskApp/uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -81,7 +94,7 @@ def background_process():
 		else:
 			return jsonify(result='Try again.')
 	except Exception as e:
-    
+
 		return str(e)
 
 @login_required
@@ -90,8 +103,8 @@ def introapp():
     try:
         #PUT FANCY PYTHON HERE YO
         output = ['digit is good', 'python is cool.','<p><strong>Hello World</strong></p>', '43', 2]
-        
-        
+
+
         return render_template("templating_demo.html", output = output)
     except Exception as e:
         return(str(e))
@@ -100,6 +113,43 @@ def introapp():
 @app.route("/about/")
 def about_page():
     return render_template("about.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/journey/")
+def journey():
+    return render_template("personal_journey.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/grot/")
+def grot():
+    return render_template("personal_grot.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/obj/")
+def obj():
+    return render_template("personal_obj.html", APP_CONTENT = APP_CONTENT)
+
+
+@app.route("/story/")
+def story():
+    return render_template("personal_story.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/sol/")
+def sol():
+    return render_template("personal_sol.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/personal_about/")
+def about():
+    return render_template("personal_about.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/personal_computer/")
+def computer():
+    return render_template("personal_computer.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/geekSquad/")
+def geekSquad():
+    return render_template("personal_geekSquad.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/triangle/")
+def triangle():
+    return render_template("personal_triangle.html", APP_CONTENT = APP_CONTENT)
 
 @app.route('/uppercase/', methods=['GET', 'POST'])
 def library_test():
@@ -112,14 +162,12 @@ def library_test():
         return render_template("uppercase.html", uppered = uppered)
     except Exception as e:
         return str(e)
-    
-    
-    
 
-    
-@app.route("/watermark/", methods=["GET","POST"])    
+@app.route("/watermark/", methods=["GET","POST"])
 def watermark_upload():#Watermark Upload Function
-    waterMark = ""
+    global waterMark
+    global uploaded_photo
+    #waterMark_URL = ""
     try:
         if request.method == 'POST':
             # check if the post request has the file part
@@ -133,51 +181,114 @@ def watermark_upload():#Watermark Upload Function
                 flash('No selected file')
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                waterMark = secure_filename(file.filename)
-                file.save(os.path.join(app.config['WATERMARK_FOLDER'], waterMark))
+                waterMark = secure_filename(file.filename) #Creates the path of the Watermark and sets it to WM
+                file.save(os.path.join(app.config['WATERMARK_FOLDER'], waterMark)) #Save File
+                #waterMark_URL = file.url()
+                #flash("Created at " + waterMark_URL)
+
                 flash('Watermark File upload successful')
-                #return redirect(url_for('watermark_upload'))
-                return render_template('upload.html', waterMark = waterMark) 
+                return redirect(url_for('photo_upload',waterMark=waterMark)) #NEED THIS INSTEAD OF RENDER_TEMPLATE TO HAVE DIFFERENT, Interesting how this works, when we use Render_template in the other functions
+                                                        #FUNCS/DEFS IN AN APPROUTE
         return render_template('wmupload.html')
     except Exception as e:
-        flash("Please upload a valid file")
+        flash("Please upload a Watermark file")
         flash(e)
-        return render_template('wmupload.html')    
+        return render_template('wmupload.html')
 
+@app.route("/photo_upload/", methods=["GET","POST"])
+def photo_upload():
+    uploaded_photo = ""
+    images = ""
+    
     
 
-@app.route("/upload/", methods=["GET","POST"])
-def photo_upload():#Photo Upload
-    photo[] = ""
     try:
         if request.method == 'POST':
             # check if the post request has the file part
-            if 'images[]' not in request.files:
-                flash('File Not in Requested Filess: Server Error: Try again')
-                #return redirect(request.url)
-                return redirect('/upload/')
-            file = request.files['images[]']
+            if 'images' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['images']
             # if user does not select file, browser also
             # submit a empty part without filename
-            try:
-                if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    flash('Photo File upload successful')
-                    return render_template('placement.html', filename = filename)
-            except:
-                if file.filename == '':
-                    flash('No selected file')
-                    return redirect(request.url)
-                else:
-                    flash("Except Else Error in Upload")
-                    return redirect(request.url)
-            
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                uploaded_photo = secure_filename(file.filename) #Creates the path of the Watermark and sets it to WM
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], uploaded_photo)) #Save File
+                flash('Photo File upload successful')
+                #return redirect(url_for("placement")+"?uploaded_photo=" +uploaded_photo + "?waterMark="+waterMark) 
+                return render_template("placement.html",uploaded_photo = uploaded_photo,waterMark = waterMark) #NEED THIS INSTEAD OF RENDER_TEMPLATE TO HAVE DIFFERENT
+                                                        #FUNCS/DEFS IN AN APPROUTE
+                #return render_template('upload.html', waterMark = waterMark)
+        global uploaded_photo
+        global waterMark
         return render_template('upload.html')
-    except:
-        flash("Please upload a valid file")
+    except Exception as e:
+        flash("Please upload a Watermark file")
+        flash(e)
         return render_template('upload.html')
 
+
+@app.route('/placement/', methods=['GET', 'POST'])
+def placement():
+    global uploaded_photo
+    global waterMark
+    global optradio
+    try:
+        if request.method == 'POST': #If the form method is post
+            optradio = request.form['optradio'] #Radio Button Input
+            #flash("POST - PRESSED THE SUBMIT BUTTON IN PROCESS")
+            global optradio
+            return render_template('photo_process.html',waterMark = waterMark, uploaded_photo = uploaded_photo, optradio = optradio) #Redirect to page with image functions
+            
+            #return redirect('photo_process.html',waterMark = waterMark, uploaded_photo = uploaded_photo, optradio = optradio)
+        return render_template('placement.html')
+    except Exception as e:
+        return(str(e))
+        flash("Please select an option!")
+        return render_template('placement.html')
+
+
+@app.route('/photo_process/', methods=['GET', 'POST'])
+def photo_process():
+    try:
+        flash("PHOTO PROCESSING :D")
+             #Resizes, saves the image to work with Coord System
+            #flash()
+        wm = Image.open("/var/www/FlaskApp/FlaskApp/uploads/wm/" + waterMark)
+        im = Image.open("/var/www/FlaskApp/FlaskApp/uploads/" + uploaded_photo)#Opens file in photo directory
+        #waterMark = Image.open(wmDir) #Use Jinja to find the directory and variable
+        wm_local = "/var/www/FlaskApp/FlaskApp/uploads/wm/" + waterMark
+        photo_local = "/var/www/FlaskApp/FlaskApp/uploads/" + uploaded_photo
+        
+        firstResize(im, photo_local)
+        #optradio = 1
+        flash((optradio))
+        
+        if optradio == "1":
+            processTopLeft(wm, im, optradio, photo_local, wm_local)
+        elif optradio == "2":
+            processTopRight(wm, im, optradio, photo_local, wm_local)
+        elif optradio == "3":
+            processBottomLeft(wm, im, optradio, photo_local, wm_local)
+        elif optradio == "4":
+            processTopRight(wm, im, optradio, photo_local, wm_local)
+        else:
+            flash("Error in Radio Button Input")
+            return render_template('photo_process.html')
+        
+        
+        
+        
+        
+        
+        return render_template('photo_process.html')
+    except Exception as e:
+        return(str(e))
+        flash("That's not supposed to happen. Try Again!")
+        return render_template('photo_process.html')
 
 @app.route('/login/', methods=["GET","POST"])
 def login_page():
@@ -237,11 +348,11 @@ def upload_file():
 @login_required
 def download():
 	try:
-		return send_file('/var/www/FlaskApp/FlaskApp/uploads/screencap.png', attachment_filename='screencap.png')
+		return send_file('/var/www/FlaskApp/FlaskApp/uploads/screencap.png', attachment_filename='screencap.png') #Client will save this and then create a file with the filename of screencap.png
 	except Exception as e:
 		return str(e)
-    
-    
+
+
 @app.route('/jquery/')
 def jquery():
 	try:
@@ -255,9 +366,9 @@ def json_stuff():
 		return render_template('jsonify.html')
 	except Exception as e:
 		return str(e)
-    
-    
-    
+
+
+
 @app.route('/downloader/', methods=['GET', 'POST'])
 @login_required
 def downloader():
@@ -331,7 +442,70 @@ def register_page():
 
     except Exception as e:
         return(str(e))
+    
+@app.route('/resume/', methods=['GET'])
+def resume():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        return render_template("resume.html")
+    except Exception as e:
+        return(str(e))    
 
+@app.route('/personal_projects/', methods=['GET'])
+def personal_projects():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        return render_template("personal_projects.html")
+    except Exception as e:
+        return(str(e))      
+
+
+@app.route('/contact/', methods=['GET'])
+def contact():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        return render_template("contact.html")
+    except Exception as e:
+        return(str(e))
+    
+@app.route('/personal/', methods=['GET'])
+def personal():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        return render_template("personal_main.html")
+    except Exception as e:
+        return(str(e))
+@app.route("/writing/")
+def writing():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        return render_template("personal_writing.html")
+    except Exception as e:
+        return(str(e))
+@app.route("/drawing/")
+def drawing():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        return render_template("personal_drawing.html")
+    except Exception as e:
+        return(str(e))
+@app.route("/bus/")
+def bus():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        return render_template("personal_bus.html")
+    except Exception as e:
+        return(str(e))
+@app.route("/production/")
+def production():
+    try:
+        #PUT FANCY PYTHON HERE YO
+        return render_template("personal_production.html")
+    except Exception as e:
+        return(str(e))
+
+    
+    
 @app.route("/logout/")
 @login_required
 def logout():
