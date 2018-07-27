@@ -2,7 +2,11 @@
 
 {% block body %}
 
-  <div class="container">
+
+
+
+
+  <div class="container" onload="disableButtons();">
     <br>
       <h1 class="display-1">Watermark Placement: Step 3/4</h1>
       <div class='row justify-content-center'>
@@ -16,22 +20,22 @@
         <div class="row">
             <form action="{{ url_for('photo_process') }}" class="form-inline" enctype="text/plain" id="placement" method="post">
                 <div class="col-md">
-                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="topRight" id="1" value="1">Top Right</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="topRight" id="1" value="1" >Top Right</label>
                     <img src="/static/images/topRight.jpg" style="height:200px; width:200px; margin-top:10px" alt="topRightCorner" >
                     <br />
                 </div>
                 <div class="col-md">
-                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="topLeft" id="2" value="2">Top Left</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="topLeft" id="2" value="2" disabled>Top Left</label>
                     <img src="/static/images/topLeft.jpg" style="height:200px; width:200px; margin-top:10px" alt="topLeftCorner" >
                     <br />
                 </div>
                 <div class="col-md">
-                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="bottomRight" id="3" value="3">Bottom Right</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="bottomRight" id="3" value="3" disabled>Bottom Right</label>
                     <img src="/static/images/chiswm.jpg" style="height:200px; width:200px; margin-top:10px" alt="bottomRightCorner" >
                     <br />
                 </div>
                 <div class="col-md">
-                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="bottomLeft" id="4" value="4">Bottom Left</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" aria-controls="bottomLeft" id="4" value="4" disabled>Bottom Left</label>
                     <img src="/static/images/bottomLeft.jpg" style="height:200px; width:200px; margin-top:10px" alt="bottomLeftCorner" >
                     <br />
                 </div>

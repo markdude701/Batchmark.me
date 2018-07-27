@@ -5,6 +5,7 @@
 import PIL as pillow #Image library
 import glob, os, os.path #Import the images
 from PIL import Image
+from flask import send_file
 #im = Image.open("img.jpg")
 
 newIm = ""
@@ -64,7 +65,7 @@ def processTopLeft(wm, im, userInput, photo_local, wm_local):
     #flash("Paste Completed")
     #savePrompt(newIm)
     wmSaved = newIm.save(photo_local + "Watermark.JPG", "JPEG")
-    return send_file(photo_local + "Watermark.JPG", attachment_filename='WaterMarked.jpg')
+    #return send_file(photo_local + "Watermark.JPG", attachment_filename='WaterMarked.jpg')
 
 def processTopRight(wm, im, userInput, photo_local, wm_local):
     newIm = Image.open(photo_local + "-1080.JPG")

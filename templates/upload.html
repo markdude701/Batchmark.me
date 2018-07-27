@@ -2,7 +2,6 @@
 
 {% block body %}
 
-<h1>UPLOAD PAGE.HTML</h1>
 
 <script>
     function fileSelected() {
@@ -106,7 +105,15 @@ function preview_images(){
  }
 }
 </script>
+<script>
+function disableButtons() {
+    document.getElementById("2").disabled = true;
+    document.getElementById("3").disabled = true;
+    document.getElementById("4").disabled = true;
+    
+}
 
+</script>
 
 <div class="container">
         <div class="row justify-content-center">

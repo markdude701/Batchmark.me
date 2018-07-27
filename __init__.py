@@ -1,3 +1,8 @@
+################## START IMPORTS ###########################################
+
+
+
+
 
 from flask import Flask, render_template, flash, url_for, redirect, request, session, make_response, send_file, send_from_directory, jsonify
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
@@ -17,23 +22,53 @@ import glob
 import PIL
 from PIL import Image
 
-APP_CONTENT = Content()
 
-#global uploaded_photo
-#global waterMark
-#global optradio
 
-UPLOAD_FOLDER = '/var/www/FlaskApp/FlaskApp/uploads'
-WATERMARK_FOLDER = '/var/www/FlaskApp/FlaskApp/uploads/wm'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+
+###################### END IMPORTS #######################################
+
+
+
+
+
+
+
+
+###################### START GLOBAL VARS #################################
+
 
 waterMark = ''
 uploaded_photo = ''
 optradio = ''
+photo_local = ''
+uploaded_photo =''
+waterMark = ''
+photoName = ''
+
+####################### END GLOBAL VARS ################################
+
+
+
+
+
+
+
+
+
+##################### START FANCY PYTHON ###############################
+
+APP_CONTENT = Content()
 
 app = Flask(__name__, instance_path='/var/www/FlaskApp/FlaskApp/uploads')
+
+ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])#IMAGES
+
+UPLOAD_FOLDER = '/var/www/FlaskApp/FlaskApp/uploads'
+WATERMARK_FOLDER = '/var/www/FlaskApp/FlaskApp/uploads/wm'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['WATERMARK_FOLDER'] = WATERMARK_FOLDER
+
 
 def login_required(f):
     @wraps(f)
@@ -80,89 +115,23 @@ def main():
         error = "Invalid credentials, try again."
         return render_template("main.html", error = error)
 
-@app.route("/dashboard/", methods = ["GET", "POST"])
-@login_required
-def dashboard():
-    return render_template("dashboard.html", APP_CONTENT = APP_CONTENT)
-
-@app.route('/background_process/')
-def background_process():
-	try:
-		lang = request.args.get('proglang', 0, type=str)
-		if lang.lower() == 'python':
-			return jsonify(result='You are wise')
-		else:
-			return jsonify(result='Try again.')
-	except Exception as e:
-
-		return str(e)
-
-@login_required
-@app.route('/introduction-to-app/', methods=['GET'])
-def introapp():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        output = ['digit is good', 'python is cool.','<p><strong>Hello World</strong></p>', '43', 2]
 
 
-        return render_template("templating_demo.html", output = output)
-    except Exception as e:
-        return(str(e))
+  ##################### END FANCY PYTHON ########################  
 
 
-@app.route("/about/")
-def about_page():
-    return render_template("about.html", APP_CONTENT = APP_CONTENT)
-
-@app.route("/journey/")
-def journey():
-    return render_template("personal_journey.html", APP_CONTENT = APP_CONTENT)
-
-@app.route("/grot/")
-def grot():
-    return render_template("personal_grot.html", APP_CONTENT = APP_CONTENT)
-
-@app.route("/obj/")
-def obj():
-    return render_template("personal_obj.html", APP_CONTENT = APP_CONTENT)
 
 
-@app.route("/story/")
-def story():
-    return render_template("personal_story.html", APP_CONTENT = APP_CONTENT)
 
-@app.route("/sol/")
-def sol():
-    return render_template("personal_sol.html", APP_CONTENT = APP_CONTENT)
 
-@app.route("/personal_about/")
-def about():
-    return render_template("personal_about.html", APP_CONTENT = APP_CONTENT)
 
-@app.route("/personal_computer/")
-def computer():
-    return render_template("personal_computer.html", APP_CONTENT = APP_CONTENT)
 
-@app.route("/geekSquad/")
-def geekSquad():
-    return render_template("personal_geekSquad.html", APP_CONTENT = APP_CONTENT)
 
-@app.route("/triangle/")
-def triangle():
-    return render_template("personal_triangle.html", APP_CONTENT = APP_CONTENT)
 
-@app.route('/uppercase/', methods=['GET', 'POST'])
-def library_test():
-    try:
-        uppered = ''
-        if request.method == "POST":
-            lower = request.form['upper']
-            uppered = library(lower)
-            return render_template("uppercase.html", uppered = uppered)
-        return render_template("uppercase.html", uppered = uppered)
-    except Exception as e:
-        return str(e)
 
+####################### START WATERMARK ###########################
+    
+    
 @app.route("/watermark/", methods=["GET","POST"])
 def watermark_upload():#Watermark Upload Function
     global waterMark
@@ -172,7 +141,7 @@ def watermark_upload():#Watermark Upload Function
         if request.method == 'POST':
             # check if the post request has the file part
             if 'wmfile' not in request.files:
-                flash('No file part')
+                flash('Not Seeing WMFILE variable')
                 return redirect(request.url)
             file = request.files['wmfile']
             # if user does not select file, browser also
@@ -187,6 +156,7 @@ def watermark_upload():#Watermark Upload Function
                 #flash("Created at " + waterMark_URL)
 
                 flash('Watermark File upload successful')
+                #return render_template("upload.html",waterMark = waterMark)
                 return redirect(url_for('photo_upload',waterMark=waterMark)) #NEED THIS INSTEAD OF RENDER_TEMPLATE TO HAVE DIFFERENT, Interesting how this works, when we use Render_template in the other functions
                                                         #FUNCS/DEFS IN AN APPROUTE
         return render_template('wmupload.html')
@@ -199,7 +169,8 @@ def watermark_upload():#Watermark Upload Function
 def photo_upload():
     uploaded_photo = ""
     images = ""
-    
+    global uploaded_photo
+    global waterMark
     
 
     try:
@@ -254,6 +225,11 @@ def placement():
 @app.route('/photo_process/', methods=['GET', 'POST'])
 def photo_process():
     try:
+        global uploaded_photo
+        global waterMark
+        global optradio
+        global wm_local
+        global photo_local
         flash("PHOTO PROCESSING :D")
              #Resizes, saves the image to work with Coord System
             #flash()
@@ -265,19 +241,19 @@ def photo_process():
         
         firstResize(im, photo_local)
         #optradio = 1
-        flash((optradio))
         
-        if optradio == "1":
-            processTopLeft(wm, im, optradio, photo_local, wm_local)
-        elif optradio == "2":
-            processTopRight(wm, im, optradio, photo_local, wm_local)
-        elif optradio == "3":
-            processBottomLeft(wm, im, optradio, photo_local, wm_local)
-        elif optradio == "4":
-            processTopRight(wm, im, optradio, photo_local, wm_local)
-        else:
-            flash("Error in Radio Button Input")
-            return render_template('photo_process.html')
+        processTopLeft(wm, im, optradio, photo_local, wm_local)
+        #if optradio == "1":
+            #processTopLeft(wm, im, optradio, photo_local, wm_local)
+        #elif optradio == "2":
+            #processTopRight(wm, im, optradio, photo_local, wm_local)
+        #elif optradio == "3":
+            #processBottomLeft(wm, im, optradio, photo_local, wm_local)
+        #elif optradio == "4":
+            #processTopRight(wm, im, optradio, photo_local, wm_local)
+        #else:
+            #flash("Error in Radio Button Input")
+            #return render_template('photo_process.html')
         
         
         
@@ -289,7 +265,101 @@ def photo_process():
         return(str(e))
         flash("That's not supposed to happen. Try Again!")
         return render_template('photo_process.html')
+    
+    
+@app.route('/wmdownloader/', methods=['GET', 'POST'])
+def wmdownloader():
+    error = ''
+    e = ''
+    try:
+        global uploaded_photo
+        global waterMark
+        global optradio
+        global wm_local
+        global photo_local
+        global photoName
+        photoName = photo_local + "Watermark.JPG"
+        flash(photoName)
+        try:
+            #return render_template('final.html', photoName = photoName)
+            return redirect(url_for('finale',photoName = photoName))
+            #return send_file(photo_local + 'Watermark.JPG')
 
+        except exception as e:
+            flash(e)
+            error = e
+            return render_template('downloader.html',error = error + ' , Exception as e' )
+
+    except:
+        error = "Exception: Please enter a valid file name"
+        return render_template('downloader.html',error = error + ' , ' + e)
+    #return render_template('final.html')
+    
+@app.route('/final/', methods=["GET","POST"])
+def finale():
+    global photoName
+    return render_template("final.html", photoName = photoName)
+ 
+    
+    
+################### END WATERMARK STUFF #############################
+
+
+
+
+
+
+
+
+
+
+################### START LESSONS #################################
+    
+@app.route("/dashboard/", methods = ["GET", "POST"])
+@login_required
+def dashboard():
+    return render_template("dashboard.html", APP_CONTENT = APP_CONTENT)
+
+@app.route('/background_process/')
+def background_process():
+	try:
+		lang = request.args.get('proglang', 0, type=str)
+		if lang.lower() == 'python':
+			return jsonify(result='You are wise')
+		else:
+			return jsonify(result='Try again.')
+	except Exception as e:
+
+		return str(e)
+
+@login_required
+@app.route('/introduction-to-app/', methods=['GET'])
+def introapp():
+    try:
+        
+        output = ['digit is good', 'python is cool.','<p><strong>Hello World</strong></p>', '43', 2]
+
+
+        return render_template("templating_demo.html", output = output)
+    except Exception as e:
+        return(str(e))
+
+
+
+@app.route('/uppercase/', methods=['GET', 'POST'])
+def library_test():
+    try:
+        uppered = ''
+        if request.method == "POST":
+            lower = request.form['upper']
+            uppered = library(lower)
+            return render_template("uppercase.html", uppered = uppered)
+        return render_template("uppercase.html", uppered = uppered)
+    except Exception as e:
+        return str(e)
+    
+    
+    
 @app.route('/login/', methods=["GET","POST"])
 def login_page():
     error = ''
@@ -319,6 +389,16 @@ def login_page():
         error = "Invalid credentials, try again."
         return render_template("login.html", error = error)
 
+@app.route("/logout/")
+@login_required
+def logout():
+    session.clear()
+    gc.collect()
+    return redirect(url_for('main'))
+    
+    
+    
+    
 @app.route('/uploads/', methods=['GET', 'POST'])
 @login_required
 def upload_file():
@@ -387,6 +467,26 @@ def downloader():
         error = "Please enter a valid file name"
         return render_template('downloader.html',error = error)
 
+    
+    
+    
+    ################### END LESSONS ########################
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    #################### REGISTER PAGES ######################
+    
+    
+    
 class RegistrationForm(Form):
     username = TextField('Username', [validators.Length(min=4, max=20)])
     email = TextField('Email Address', [validators.Length(min=6, max=50)])
@@ -408,6 +508,7 @@ class RegistrationForm(Form):
     accept_tos = BooleanField('I accept the Terms of Service and Privacy Notice', [validators.Required()])
 
 @app.route('/register/', methods=["GET","POST"])
+
 def register_page():
     try:
         form = RegistrationForm(request.form)
@@ -443,75 +544,23 @@ def register_page():
     except Exception as e:
         return(str(e))
     
-@app.route('/resume/', methods=['GET'])
-def resume():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        return render_template("resume.html")
-    except Exception as e:
-        return(str(e))    
-
-@app.route('/personal_projects/', methods=['GET'])
-def personal_projects():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        return render_template("personal_projects.html")
-    except Exception as e:
-        return(str(e))      
-
-
-@app.route('/contact/', methods=['GET'])
-def contact():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        return render_template("contact.html")
-    except Exception as e:
-        return(str(e))
-    
-@app.route('/personal/', methods=['GET'])
-def personal():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        return render_template("personal_main.html")
-    except Exception as e:
-        return(str(e))
-@app.route("/writing/")
-def writing():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        return render_template("personal_writing.html")
-    except Exception as e:
-        return(str(e))
-@app.route("/drawing/")
-def drawing():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        return render_template("personal_drawing.html")
-    except Exception as e:
-        return(str(e))
-@app.route("/bus/")
-def bus():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        return render_template("personal_bus.html")
-    except Exception as e:
-        return(str(e))
-@app.route("/production/")
-def production():
-    try:
-        #PUT FANCY PYTHON HERE YO
-        return render_template("personal_production.html")
-    except Exception as e:
-        return(str(e))
-
     
     
-@app.route("/logout/")
-@login_required
-def logout():
-    session.clear()
-    gc.collect()
-    return redirect(url_for('main'))
+ ######################## END REGISTER PAGES ############################
+
+
+
+
+
+
+
+
+
+
+
+
+    #################### START GOOGLE STUFF ####################
+
 
 
 @app.route('/sitemap.xml/', methods=['GET'])
@@ -536,6 +585,135 @@ def robots():
     #return("User-agent: *\nDisallow /") #Disallows all robot traffic
     return("User-agent: *\nDisallow: /register/\nDisallow: /login/") #Disallows robot traffic to sensitive urls
 
+######################## END GOOGLE STUFF ###########################
+
+
+
+
+
+
+
+
+
+
+
+######################### START PERSONAL PAGES ##########################
+
+
+    
+@app.route('/resume/', methods=['GET'])
+def resume():
+    try:
+        return render_template("resume.html")
+    except Exception as e:
+        return(str(e))    
+
+@app.route('/personal_projects/', methods=['GET'])
+def personal_projects():
+    try:
+        return render_template("personal_projects.html")
+    except Exception as e:
+        return(str(e))      
+
+
+@app.route('/contact/', methods=['GET'])
+def contact():
+    try:
+        return render_template("contact.html")
+    except Exception as e:
+        return(str(e))
+    
+@app.route('/personal/', methods=['GET'])
+def personal():
+    try:
+        return render_template("personal_main.html")
+    except Exception as e:
+        return(str(e))
+@app.route("/writing/")
+def writing():
+    try:
+        return render_template("personal_writing.html")
+    except Exception as e:
+        return(str(e))
+@app.route("/drawing/")
+def drawing():
+    try:
+        return render_template("personal_drawing.html")
+    except Exception as e:
+        return(str(e))
+@app.route("/bus/")
+def bus():
+    try:
+        return render_template("personal_bus.html")
+    except Exception as e:
+        return(str(e))
+@app.route("/production/")
+def production():
+    try:
+        return render_template("personal_production.html")
+    except Exception as e:
+        return(str(e))
+    
+@app.route("/photography/")
+def photography():
+    try:
+        return render_template("personal_photo.html")
+    except Exception as e:
+        return(str(e))
+    
+@app.route("/web_design/")
+def web_design():
+    try:
+        return render_template("personal_web_design.html")
+    except Exception as e:
+        return(str(e))
+
+@app.route("/about/")
+def about_page():
+    return render_template("about.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/journey/")
+def journey():
+    return render_template("personal_journey.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/grot/")
+def grot():
+    return render_template("personal_grot.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/obj/")
+def obj():
+    return render_template("personal_obj.html", APP_CONTENT = APP_CONTENT)
+
+
+@app.route("/story/")
+def story():
+    return render_template("personal_story.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/sol/")
+def sol():
+    return render_template("personal_sol.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/personal_about/")
+def about():
+    return render_template("personal_about.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/personal_computer/")
+def computer():
+    return render_template("personal_computer.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/geekSquad/")
+def geekSquad():
+    return render_template("personal_geekSquad.html", APP_CONTENT = APP_CONTENT)
+
+@app.route("/triangle/")
+def triangle():
+    return render_template("personal_triangle.html", APP_CONTENT = APP_CONTENT)
+    
+    
+    
+ ######################## - END PERSONAL SECTION - ########################3   
+
+########################## - ERROR HANDLERS - ##############################
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -549,5 +727,17 @@ def page_not_found(e):
 def int_server_error(e):
     return render_template("500.html", error = e)
 
+######################### - END ERROR HANDLERS - ########################
+
+
+
+
+
+
+
+
+########################### RUN APP ####################################
+
 if __name__ == "__main__":
 	app.run()
+

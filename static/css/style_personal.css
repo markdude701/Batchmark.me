@@ -16,31 +16,6 @@ p, li, h2, h3, h4, h5 {
     
 }
 
-h1.title{
-    font-family: 'Quicksand', sans-serif;
-    text-align: left;
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    transform: translate(-50%, -50%);
-    color:white;
-    font-size: 1000%;
-    /* Safari */
-    -webkit-transform: rotate(-90deg);
-
-    /* Firefox */
-    -moz-transform: rotate(-90deg);
-
-    /* IE */
-    -ms-transform: rotate(-90deg);
-
-    /* Opera */
-    -o-transform: rotate(-90deg);
-
-    /* Internet Explorer */
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-}
-
 
 
 hr {
@@ -56,6 +31,11 @@ body {
     font-family: 'Ramabhadra', sans-serif;
 }
 
+#cardMargin {
+    margin-left: 2%; 
+    margin-right: 2%;
+    
+}
 
 #webtextLeft {
     text-align:left; 
@@ -67,8 +47,8 @@ body {
     
 }
 
-#personal_background {
-    
+#rowText {
+    padding-left:2%;
     
     
 }
