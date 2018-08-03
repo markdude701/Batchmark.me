@@ -3,16 +3,28 @@
 {% block body %}
     <div class="">
         <div class="hero-image" >
-        <img src="/static/images/MeResized.jpg" class="mainImage "alt="Hero Main image" style="max-width:120em;height:auto; padding-top:5px; padding-left: 5px;">
+			<img src="/static/images/MeResized.jpg" id="mainImage" alt="Hero Main image" 
+			style="
+			height: 120%;
+			width:125%;  
+			postion:relative; 
+			overflow: visible;
+			margin-top: 5%;
+
+   			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			position: relative;
+			">
           <div class="hero-text" style="padding-left: 5px;">
 
             <h1>Mark Makowski</h1>
             <p>And I'm a Web Developer</p>
-              <div class="btn-group" role="group" aria-label="Home navigation Buttons" style="padding:2%;">
-                  <a href="/personal_about/"><button type="button" class="btn btn-secondary">About</button></a>
-                  <a href="/personal_projects/"><button type="button" class="btn btn-secondary">Projects</button></a>
-                  <a href="/resume/"><button type="button" class="btn btn-secondary">Resume</button></a>
-                  <a href="/contact/"><button type="button" class="btn btn-secondary">Contact</button></a>
+              <div class="btn-group" role="group" aria-label="Home navigation Buttons" style="margin-left:2%;">
+                  <a href="/personal_about/"><button type="button" class="btn btn-secondary" style="margin-left:2%;">About</button></a>
+                  <a href="/personal_projects/"><button type="button" class="btn btn-secondary" style="margin-left:2%;">Projects</button></a>
+                  <a href="/resume/"><button type="button" class="btn btn-secondary" style="margin-left:2%;">Resume</button></a>
+                  <a href="/contact/"><button type="button" class="btn btn-secondary" style="margin-left:2%;">Contact</button></a>
                 </div>
               
               

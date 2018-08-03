@@ -55,35 +55,44 @@ body {
 
 
 body, html {
+	padding: 0!important;
+	margin: 0!important;
     height: 100%;
 }
 
 /* The hero image */
 .hero-image {
+	background-image: url({{url_for('static',filename='images/MeResized.jpg'}})
+	height: 80em;
+	width:100%;  
+	postion:absolute; 
+	overflow: visible;
 
-    /* Position and center the image to scale nicely on all screens */
-     /* Set a specific height */
-    max-width:80%;
-    height:auto;
-    top:60%;
     /* Position and center the image to scale nicely on all screens */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    
 }
+
+.mainImage{
+	display:none !important;
+}
+
+
+
 
 /* Place text in the middle of the image */
 .hero-text {
     text-align: center;
     position: absolute;
     top: 50%;
-    left: 60%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: white
     
 }
-
 
 img.card-img-top:hover {
     position: absolute;
