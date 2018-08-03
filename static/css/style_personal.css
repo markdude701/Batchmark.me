@@ -53,6 +53,19 @@ body {
     
 }
 
+.title{
+	
+	/* DISPLAYING NO TITLE. JUST A PLACEHOLDER UNTIL I FIGURE THAT OUT */
+	
+	display:none;
+	position: absolute;
+	transform: rotate(-90deg);
+	margin-left: -10%;
+	margin-top: 20%;
+	padding-top:0%;
+	font-size: 10vw;
+}
+
 
 body, html {
 	padding: 0!important;
@@ -79,7 +92,6 @@ body, html {
 .mainImage{
 	display:none !important;
 }
-
 
 
 
